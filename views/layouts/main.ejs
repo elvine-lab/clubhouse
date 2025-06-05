@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}} | Clubhouse</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="navbar-brand">Clubhouse</a>
+      <div class="navbar-nav">
+        {{#if currentUser}}
+          <a href="/messages/new" class="nav-link">New Message</a>
+          {{#unless currentUser.is_member}}
+            <a href="/join" class="nav-link">Join Club</a>
+          {{/unless}}
+          <a href="/logout" class="nav-link">Logout</a>
+        {{else}}
+          <a href="/login" class="nav-link">Login</a>
+          <a href="/signup" class="nav-link">Sign Up</a>
+        {{/if}}
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    {{#if success_msg}}
+      <div class="alert alert-success">{{success_msg}}</div>
+    {{/if}}
+    {{#if error_msg}}
+      <div class="alert alert-danger">{{error_msg}}</div>
+    {{/if}}
+    {{#if error}}
+      <div class="alert alert-danger">{{error}}</div>
+    {{/if}}
+
+    {{{body}}}
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Clubhouse. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<h1>Clubhouse Messages</h1>
+
+{{#unless currentUser}}
+  <div class="callout">
+    <p><a href="/login">Log in</a> to create messages or <a href="/signup">sign up</a> to join our community!</p>
+  </div>
+{{/unless}}
+
+{{#if currentUser}}
+  {{#unless currentUser.is_member}}
+    <div class="callout">
+      <p>Want to see who wrote these messages? <a href="/join">Join the club!</a></p>
+    </div>
+  {{/unless}}
+{{/if}}
+
+<div class="messages-container">
+  {{#each messages}}
+    <div class="message-card">
+      <h2>{{this.title}}</h2>
+      <p class="message-content">{{this.content}}</p>
+      
+      <div class="message-meta">
+        {{#if ../currentUser.is_member}}
+          <span class="message-author">Posted by {{this.first_name}} {{this.last_name}}</span>
+        {{else}}
+          <span class="message-author">Posted by Anonymous</span>
+        {{/if}}
+        <span class="message-date">{{formatDate this.created_at}}</span>
+      </div>
+
+      {{#if ../currentUser.is_admin}}
+        <form action="/messages/{{this.id}}/delete" method="POST" class="delete-form">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      {{/if}}
+    </div>
+  {{else}}
+    <p class="no-messages">No messages yet. Be the first to post!</p>
+  {{/each}}
+</div>
